@@ -1,5 +1,4 @@
 window.onload = function(){
-	//canvas init
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	
@@ -12,8 +11,7 @@ window.onload = function(){
 	//snowflake particles
 	var mp = 25; //max particles
 	var particles = [];
-	for(var i = 0; i < mp; i++)
-	{
+	for(var i = 0; i < mp; i++) {
 		particles.push({
 			x: Math.random()*W, //x-coordinate
 			y: Math.random()*H, //y-coordinate
@@ -23,8 +21,7 @@ window.onload = function(){
 	}
 	
 	//Lets draw the flakes
-	function draw()
-	{
+	function draw() {
 		ctx.clearRect(0, 0, W, H);
 		
 		ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
@@ -39,14 +36,11 @@ window.onload = function(){
 		update();
 	}
 	
-	//Function to move the snowflakes
 	//angle will be an ongoing incremental flag. Sin and Cos functions will be applied to it to create vertical and horizontal movements of the flakes
 	var angle = 0;
-	function update()
-	{
+	function update() {
 		angle += 0.01;
-		for(var i = 0; i < mp; i++)
-		{
+		for(var i = 0; i < mp; i++) {
 			var p = particles[i];
 			//Updating X and Y coordinates
 			//We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
@@ -57,22 +51,16 @@ window.onload = function(){
 			
 			//Sending flakes back from the top when it exits
 			//Lets make it a bit more organic and let flakes enter from the left and right also.
-			if(p.x > W+5 || p.x < -5 || p.y > H)
-			{
-				if(i%3 > 0) //66.67% of the flakes
-				{
+			if(p.x > W+5 || p.x < -5 || p.y > H) {
+				if(i%3 > 0) { //66.67% of the flakes
+				
 					particles[i] = {x: Math.random()*W, y: -10, r: p.r, d: p.d};
-				}
-				else
-				{
+				} else {
 					//If the flake is exitting from the right
-					if(Math.sin(angle) > 0)
-					{
+					if(Math.sin(angle) > 0) {
 						//Enter from the left
 						particles[i] = {x: -5, y: Math.random()*H, r: p.r, d: p.d};
-					}
-					else
-					{
+					} else {
 						//Enter from the right
 						particles[i] = {x: W+5, y: Math.random()*H, r: p.r, d: p.d};
 					}
@@ -80,6 +68,5 @@ window.onload = function(){
 			}
 		}
 	}
-	
 	setInterval(draw, 33);
 }
